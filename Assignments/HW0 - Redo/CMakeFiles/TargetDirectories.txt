@@ -1,4 +1,0 @@
-/s/bach/j/under/rblocker/cs253/hw0_2/CMakeFiles/rebuild_cache.dir
-/s/bach/j/under/rblocker/cs253/hw0_2/CMakeFiles/edit_cache.dir
-/s/bach/j/under/rblocker/cs253/hw0_2/CMakeFiles/hw0.dir
-/s/bach/j/under/rblocker/cs253/hw0_2/CMakeFiles/hw0.tar.dir
