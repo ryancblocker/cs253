@@ -1,0 +1,45 @@
+#ifndef DOCUMENT_H
+#define DOCUMENT_H
+
+#include <iostream>
+#include <string>
+#include <vector>
+#include <istream>
+#include <ostream>
+
+class Doc
+{
+        public:
+		//Default Contructor
+		Doc();
+		//Methods: Read, Write, Add, Size, Empty, Indent, Data
+		Doc(std::string filePath);
+		Doc(std::istream readIs);
+		void read(std::string filePath);
+		void read(std::istream readIs);
+		void write(std::string docPath);
+		void write(std::ostream addToOs);
+		void add(std::string addEndLine);
+		size_t size();
+		bool empty();
+		size_t indent(size_t lineNum);
+		std::string data(size_t lineNum);
+
+	private:
+		//Line infrastrucuture
+		struct Line
+		{
+			size_t indent;
+			std::string data;
+		}
+
+		std::vector<Line> lines;
+
+		//Asignment Operators
+                Doc operator+=(const std::string &rhs);
+		//operator=?
+};
+
+std::ostream &operator<<(std::ostream &write, Doc &d);
+//do I need to declare operator>>
+#endif /* DOCUMENT */

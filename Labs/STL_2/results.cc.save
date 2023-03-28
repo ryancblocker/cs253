@@ -1,0 +1,53 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <set>
+#include <fstream>
+
+using namespace std;
+
+int main()
+{
+	//1. Read all integers into vector<int> until 0 is entered
+
+	vector<int> inputVector;
+        int inputNum;
+
+	cout << "Enter numbers into your vector: \n\n";
+
+	while(cin >> inputNum)
+	{
+		if (inputNum != 0)
+		{
+			inputVector.push_back(inputNum);
+		}
+		else
+		{
+			cout << "\n";
+			break;
+		}
+	}
+	
+	cout << "Your vector contains: \n\n";
+
+	for (size_t i = 0; i < inputVector.size(); i++)
+	{
+		cout << inputVector[i] << "\n";
+	}
+
+	cout << "\n";
+
+	//2. Display all the integers from vector one per line
+	
+	string emptString = "";
+	char wholeFile;
+	
+
+	//3. Read everything from the file /etc/resolv.conf into one big strin
+	//4. Copy everything from file into a multiset<char>
+	//5. Copy everything from the multiset<char> to a set<char>
+	//6. display the size and charachters from the string, set<char> and multiset<char
+	//7. comment block explaining previous outputs
+
+	return 0;
+}

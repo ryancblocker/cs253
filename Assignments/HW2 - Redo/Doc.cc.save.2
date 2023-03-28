@@ -1,0 +1,170 @@
+#include "Doc.h"
+#include <iostream>
+#include <string>
+#include <fstream>
+#include <vector>
+#include <istream>
+#include <ostream>
+
+using namespace std;
+
+ostream &operator<<(ostream &write, Doc &d) {
+        return write << lines
+}
+
+//Doc Constructor (same as .read (PATH))
+Doc::Doc(std::string filePath)
+{
+	ifstream path(filePath);
+
+	if(!path)
+	{
+		cerr << "\nERROR: I was not able to open your file\n";
+		exit(1);
+	}
+
+
+	//Put file into string and count leading spaces
+	for(string wholeLine; getline(path, wholeLine);)
+	{
+		int indentTemp = 0;
+		string dataTemp = "";
+
+		for(size_t i = 0; i < wholeLine.size(); i++)
+		{
+			if(wholeLine.at[i] == ' ') 
+			{
+				indentTemp++;
+			}
+			else
+			{
+				goto trailing;
+			}
+		trailing:
+			for(size_t i = 0; i < lines.size(); i++)
+        		{
+                		string spaceCarriage (" \r");
+                		size_t found = lines[i].find_last_not_of(spaceCarriage);
+                		if(found!=string::npos)
+                		{
+                        		lines[i].erase(found+1);
+                		}
+        		}
+		lines.pop_back({indentTemp, dataTemp});
+		}
+	}
+}
+
+//Doc Constructor (same as .read (ISTREAM))
+Doc::Doc(std::istream readIs)
+{
+	//SAME AS ABOVE BUT IMPLEMENT ISTREAM
+}
+
+//Read Method (PATH): Read from the given file path removing trailing spaces and \r carriage returns
+void Doc::read(std::string filePath)
+{
+	ifstream path(filePath);
+
+        if(!path)
+        {
+                cerr << "\nERROR: I was not able to open your file\n";
+                exit(1);
+        }
+
+
+	//Put file into string and count leading spaces
+        for(string wholeLine; getline(path, wholeLine);)
+        {
+                int indentTemp = 0;
+                string dataTemp = "";
+
+                for(size_t i = 0; i < wholeLine.size(); i++)
+                {
+                        if(wholeLine.at[i] == ' ') 
+                        {
+                                indentTemp++;
+                        }
+                        else
+                        {
+                                goto trailing;
+                        }
+                trailing:
+                        for(size_t i = 0; i < lines.size(); i++)
+                        {
+                                string spaceCarriage (" \r");
+                                size_t found = lines[i].find_last_not_of(spaceCarriage);
+                                if(found!=string::npos)
+                                {
+                                        lines[i].erase(found+1);
+                                }
+                        }
+                lines.pop_back({indentTemp, dataTemp});
+                }
+        }
+}
+//Read Method (ISTREAM): Read from the input stream
+void Doc::read(std::istream readIs)
+{
+
+}
+
+//Write Method (PATH): Write to the document to another file at the path each line terminated by \n
+void Doc::write(std::string docPath)
+{
+
+}
+
+//Write Method (OSTREAM): Write to to the given ostream
+void Doc::write(std::ostream addToOs)
+{
+
+}
+
+//Add Method: Add a line to the end of the document object. Treat leading spaces as indentation, ignore trailing spaces
+void Doc::add(std::string addEndLine)
+{
+
+}
+
+//Size Method: Return the number of lines in the object
+size_t Doc::size() const
+{
+	return lines.size();
+}
+
+//Empty Method: Is the document empty?
+bool Doc::empty() const
+{
+	if(lines.empty()) { return true; }
+
+	else { return false; }
+}
+
+//Indent Method: Return number of spaces before charachters at a specific line, error if line does not exist
+size_t Doc::indent(const size_t &lineNum)
+{
+	if(lineNum > lines.size())
+	{
+		cerr "That line number does not exist in the document";
+		exit(1);
+	}
+	else
+	{
+		return lines[lineNum].indent;
+	}
+
+}
+//Data Method: Get data at line without indentation, error if line does not exist
+string Doc::data(const size_t &lineNumData)
+{
+	if(lineNum > lines.size())
+        {
+                cerr "That line number does not exist in the document";
+                exit(1);
+        }
+        else
+	{
+		 return lines[lineNum].data;
+        }
+}

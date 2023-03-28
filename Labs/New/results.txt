@@ -1,0 +1,37 @@
+Lab09: New Lab
+Name: Ryan Blocker
+School: Colorado State University
+Email: rblocker@colostate.edu
+
+Question 1: The free functions new/delete are redefined in glob.cc. Both functions are set to return void because we dont know what kind of data we are creating or destorying yet. If we made New return and int * or double * we would be bound to creating things with "new" only with those types. We need to pass in the pointer to delete so we know exactyle what we are deleting.
+
+Question 2:
+	Line 1: We are declaring a pointer of type double. We are using the global new to define this pointer
+	Line 2: Declares Foo pointer *q and uses the class defined new with trace output
+	Line 3: Declares Foo pointer *r and uses the class defined new with trace output
+	Line 4: Calls gloabl delete to get rid of the pointer we created earlier
+	Line 5: Calls Foo class delete operator to get rid of the *q Foo pointer
+	Line 6: Calls Foo class delete operator to get rid of the *r Foo pointer
+	Line 7: Returning 0 because thats what main() likes ;)
+	
+	The Foo class operators are declared static because the memory should be only initialized once. Each time you call the class new or delete it intializes that 	      memory only once. So when *p is made it allocated that memory only once. If another pointer is created it would initialize the memory for that pointer only once.
+
+Question 3: forbid1.cc does not compile. The program cannot compile because in the class Foo both the new and delete operators are declared as private
+
+Question 4: forbid2.cc does not compile. The program does not compile because you are trying to call a function that has been forbidden. The new operator in the Foo class has been set to "= delete" which means it has been forbidden.
+
+Question 5: They are declared protected so that we can't create an instance of class NoNewDelete()
+
+Question 6: We would put all the addresses we need to search into a vector and then search to see if the the same instance of Foo exists in the structure, if it detect more than one instance exists we can throw an error saying that more than one instance at the same address exists. 
+
+Question 7: 3.14159265 this is the first few digits of pi and when I see this I know that something went wrong.
+
+Question 8: The size of class Foo when normal.cc is run is 8 bytes. The difference between p and q is that they are both instances of the class Foo but q is stored in a higher address in memory. In pool.cc the size of class Bar is 8 bytes and the difference between r and s is they are 32bits because that is the default distance between two class instances. In pool.cc r ans s are different sizes. In this case, we changed the distance between the instances to be 8bits instead of 32bits.
+
+Question 9: If you redefine new/delete for class Foo the define class Bar from Foo then Bar will inherit the new/delete implementations from Foo. No that will not work if Bar is defined off of Foo then instances of Bar will be the exact same size as Foo. To fix this when we are creating a new Foo instance if we change the new operator to allocate more space space by default it will be able to create a new Bar object.
+
+Question 10: In my tests when creating 10,000,000 new instances of class Bar and Foo. pool.cc had a faster time of 0.07 and normal.cc had a time of 0.21. So, pool.cc is roughly 200% faster than normal.cc, this is because class Bar objects in pool.cc are smaller than Foo instances in normal.cc
+
+Question 11: Using the same tests as the previous step normal.cc took up 315628 kilobytes and pool.cc took up 81528 kilobytes! That means that normal.cc took up 74.16% more memory than pool.cc! This is because the objects in pool are smaller than those in normal.cc 
+
+

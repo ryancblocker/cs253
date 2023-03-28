@@ -1,0 +1,44 @@
+#! /bin/bash
+
+#Created by Ryan Blocker
+#Coloado State University
+
+old_suffix=$1
+new_suffix=$2
+
+# ERROR CHECK1: No arguments
+if (($# == 0))
+then
+    echo "You didnt give me any arguments!" >&2
+    exit 1
+fi
+
+# ERROR CHECK2: Less than two arguments
+if (($# < 2))
+then
+    echo "Please give me at least two arguments" >&2
+    exit 1
+fi
+
+#ERROR CHECK3: More than two arguments
+if (($# > 2))
+then
+    echo "You gave me to many arguments, please give me two!" >&2
+    exit 1
+fi
+
+#Change file suffix
+for f in *.$old_suffix
+do
+    new_name=${f%.*}.$new_suffix
+    echo Rename $f to $new_name
+
+    #Does the file already exist?
+    if [[ -e $new_name ]]
+    then
+        echo "Your new file name already exists" >&2
+        exit 1
+    else
+        mv $f $new_name
+    fi
+done

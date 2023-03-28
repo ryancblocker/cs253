@@ -1,0 +1,112 @@
+# This is a Makefile.  Its purpose is to create the program “small”.
+#
+# The rules, below, indicate what depends on what, and how to build
+# things when they get out-of-date.  It is VERY important to know that
+# what looks like eight leading spaces is really a leading tab
+# character.  Leading spaces won’t work--it MUST be a tab character.
+#
+# For the following questions, do the command if there is one,
+# and then answer the question.  If you need another line for you
+# answer, continue it on the next line, indented.
+#
+# As an example, I’ve already answered (1), which has nothing to do
+# with anything else in this lab.
+#
+# Question 1 is worth 0.09 points; questions 2–14 are worth 0.07
+# points each.
+#
+#  1) Command:  date +%A
+#     Question: Describe the output of that command.
+#     Answer: It’s today’s day of the week.
+#
+#  2) Command:  make
+#     Question: Describe what happens.  Don’t just write the commands;
+#     		describe what each command does.
+#     Answer: The "make" command reads the Makefile and creates main.o foo.o and the small executable
+# 
+#  3) Command:  ./small
+#     Question: What is the output?  Reproduce the output exactly.
+#     Answer: Hi from main at main.cc:15
+#	      Hi from foo at foo.cc:14 
+#
+#  4) Command:  make
+#     Question: Why did nothing much happen?
+#     Answer: I have already compiled all of the files at this time so there is nothing to change
+#
+#  5) Command:  rm small; make
+#     Question: What got remade, and why?
+#     Answer:   Remove the small executable file and re-compiles all of the files
+#
+#  6) Command:  rm foo.o; make 
+#     Question: What got remade, and why?
+#     Answer: The foo.o file got re-compiled after it was deleted with the "rm" command
+#
+#  7) Command:  make clean 
+#     Question: What did that do?
+#     Answer: it removes all .o files as well as the small executable file
+#
+#  8) Command:  make 
+#     Question: What got remade, and why?
+#     Answer: re-compiles all .o files and the small executable, because the previous function "clean" deleted .o and small 
+#
+#  9) Question: Why does main.o depend on foo.h?
+#		I know that it’s because the Makefile says so.
+#		Why was that dependency put into the Makefile?
+#     Answer: The foo() function is called in main. Therefore main needs to call foo.h. If foo.h changes so does main. This means that main
+#             depends on foo.h
+#	   
+# 10) Command:  Create a new function bar() in bar.cc & bar.h,
+# 		similar to foo.cc.  Change main.cc to call the new
+# 		bar() function, make sure to #include the proper .h
+# 		files everywhere, and type “make”.  Don’t alter Makefile.
+#     Question: Why did it fail?
+#     Answer: The make failed because bar.h bar.cc main.cc are not called in the MakeFile and some of the files that are needed to compile
+#             reference the bar files.  
+#
+# 11) Command:  Fix the Makefile; verify with “make” until it compiles.
+#     Question: Describe your changes.  Don’t just show the changed
+#     		lines--describe the purpose of each change.
+#     Answer: I added bar.h to main.o as well as bar.o to small and I created bar.o and added bar.h and bar.cc to it.
+#	      I had to add each of these files to the MakeFile so that when the program is compiled it can find and read all of the bar files
+#             and work with the other functions.
+#
+# 12) Command:  Uncomment the CXXFLAGS= line, and type “make”.
+#     Question: Why didn't anything happen?
+#     Answer: All of the object files where previously created and there are no new changes 
+#
+# 13) Command:  Force a rebuild with: make clean; make 
+#     Question: What’s new about the commands executed?
+#     Answer: The CXXFLAGS (Warnings and Error Checking) have now been added and now the makefile compiles with those checks applied
+#
+# 14) Command: 	make clean; ls -l clean
+#     Question: The target is “clean”, but no file “clean” got created.
+#     		Why not?
+#     Answer: "clean" is a function not a file that removes the small executable and all .o files
+#
+# For extra fame & glory (but no extra points):
+#
+# 15) Command:  Consult the make manual at
+# 		https://www.gnu.org/software/make/manual/make.html
+#		and improve this Makefile by using $@ in the rule
+#		that creates “small” itself.
+
+# The CXX variable contains the name of the C++ compiler.  You can’t
+# have plus signs in a Make variable, so X is a rotated plus sign.
+CXX=g++
+
+CXXFLAGS=-std=c++17 -Wall -Wextra -Wpedantic -Werror -Wfatal-errors -Winit-self -Wshadow -Wlogical-op -Wcomment -Wctor-dtor-privacy -Wold-style-cast -D_GLIBCXX_DEBUG -fno-diagnostics-show-option
+
+small: main.o foo.o bar.o
+	$(CXX) $(CXXFLAGS) main.o foo.o bar.o -o small
+
+main.o: main.cc foo.h bar.h
+	$(CXX) $(CXXFLAGS) -c main.cc
+
+foo.o: foo.cc foo.h
+	$(CXX) $(CXXFLAGS) -c foo.cc
+
+bar.o: bar.cc bar.h
+	$(CXX) $(CXXFLAGS) -c bar.cc
+
+clean:
+	-rm -f small *.o

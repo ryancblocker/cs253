@@ -1,0 +1,19 @@
+exp1: delete[] not calld to results.txt
+
+exp2: You can't allocate to x[10] because the array of charachters has no 10th index. "x" has a size of 10 but starts at 0)
+
+exp3: You can't compare the uninitialized variable x to a intialized variable at line 11. This invokes undefined behavior. The value x will never be set to 42 because ther is no time machine avaliable
+
+exp4: The program is trying to compare y which is an uninitialized value
+
+exp5: This invokes undefined behavior and fails because you are trying to assign a value that is way outside the array's scope
+
+exp6: The program is trying to output data that has already been deallocated.
+
+exp7: The program used the wrong keyword. It should have used "delete[]" instead of "delete"
+
+exp8: The program used the wrong keyword. It should have used "delete[]" instead of "free()"
+
+exp9: The prgram is trying to delete the "a" which is not the same "a" that was created. We modified a by a+=3.
+
+exp10: Valgrind is looking for a specific set of things like data holes and errors. In this case the program made both "a and b" unsigned as well as the difference. So instead of reading the signed bit the compiler read it as part of the number. This is why the code doesnt produce -10. This is defined behavior so Valgrind didnt catch it. 

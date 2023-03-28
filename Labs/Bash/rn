@@ -1,0 +1,30 @@
+#! /bin/bash
+
+old_suffix=$1
+new_suffix=$2
+
+echo "This script changes a file type from .c to a C++ file .cpp"
+
+if (( $# < 2 ))
+then
+	echo "you have to few arguments, add more" >&2
+	exit 1
+fi
+
+for f in *.$old_suffix
+do
+	new_name=${f%.*}.$new_suffix
+
+	if [[ -e $new_name ]]  #does file already exist
+        then
+                echo "your file already exists" 
+                exit 1
+        fi
+
+	mv $f ${f%.*}.$new_suffix
+	echo Rename $f to $new_name
+done
+
+
+
+
